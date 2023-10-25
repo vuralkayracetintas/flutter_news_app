@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:news_app/product/constants/api_constans.dart';
+import '../../../api_constans.dart';
 import 'package:news_app/product/model/country_model.dart';
 
 class CountryNewsRepository {
