@@ -46,4 +46,4 @@ app.*.map.json
 
 
 # Req 
-/lib/product/constants/api_constants.dart
+/lib/
