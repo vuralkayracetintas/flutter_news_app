@@ -17,7 +17,7 @@ class CountryBloc extends Bloc<CountryEvents, CountryState> {
           if (e is Exception) {
             emit(CountryErrorState(e.toString()));
           } else {
-            emit(CountryErrorState("Unexpected error"));
+            emit(CountryErrorState("Unexpected error ${e}"));
           }
         }
       },

@@ -1,55 +1,61 @@
-// To parse this JSON data, do
-//
-//     final countryNewsModel = countryNewsModelFromMap(jsonString);
+import 'package:equatable/equatable.dart';
 
-import 'dart:convert';
-
-CountryNewsModel countryNewsModelFromMap(String str) =>
-    CountryNewsModel.fromMap(json.decode(str));
-
-String countryNewsModelToMap(CountryNewsModel data) =>
-    json.encode(data.toMap());
-
-class CountryNewsModel {
-  List<Article>? articles;
+class CountryNewsModel with EquatableMixin {
+  String? status;
+  int? totalResults;
+  List<Articles>? articles;
 
   CountryNewsModel({
+    this.status,
+    this.totalResults,
     this.articles,
   });
 
+  @override
+  List<Object?> get props => [status, totalResults, articles];
+
   CountryNewsModel copyWith({
-    List<Article>? articles,
-  }) =>
-      CountryNewsModel(
-        articles: articles ?? this.articles,
-      );
+    String? status,
+    int? totalResults,
+    List<Articles>? articles,
+  }) {
+    return CountryNewsModel(
+      status: status ?? this.status,
+      totalResults: totalResults ?? this.totalResults,
+      articles: articles ?? this.articles,
+    );
+  }
 
-  factory CountryNewsModel.fromMap(Map<String, dynamic> json) =>
-      CountryNewsModel(
-        articles: json["articles"] == null
-            ? []
-            : List<Article>.from(
-                json["articles"]!.map((x) => Article.fromMap(x))),
-      );
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'totalResults': totalResults,
+      'articles': articles,
+    };
+  }
 
-  Map<String, dynamic> toMap() => {
-        "articles": articles == null
-            ? []
-            : List<dynamic>.from(articles!.map((x) => x.toMap())),
-      };
+  factory CountryNewsModel.fromJson(Map<String, dynamic> json) {
+    return CountryNewsModel(
+      status: json['status'] as String?,
+      totalResults: json['totalResults'] as int?,
+      articles: (json['articles'] as List<dynamic>?)
+          ?.map((e) => Articles.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
 }
 
-class Article {
+class Articles with EquatableMixin {
   Source? source;
   String? author;
   String? title;
   String? description;
   String? url;
   String? urlToImage;
-  DateTime? publishedAt;
+  String? publishedAt;
   String? content;
 
-  Article({
+  Articles({
     this.source,
     this.author,
     this.title,
@@ -60,54 +66,71 @@ class Article {
     this.content,
   });
 
-  Article copyWith({
+  @override
+  List<Object?> get props => [
+        source,
+        author,
+        title,
+        description,
+        url,
+        urlToImage,
+        publishedAt,
+        content
+      ];
+
+  Articles copyWith({
     Source? source,
     String? author,
     String? title,
     String? description,
     String? url,
     String? urlToImage,
-    DateTime? publishedAt,
+    String? publishedAt,
     String? content,
-  }) =>
-      Article(
-        source: source ?? this.source,
-        author: author ?? this.author,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        url: url ?? this.url,
-        urlToImage: urlToImage ?? this.urlToImage,
-        publishedAt: publishedAt ?? this.publishedAt,
-        content: content ?? this.content,
-      );
+  }) {
+    return Articles(
+      source: source ?? this.source,
+      author: author ?? this.author,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      url: url ?? this.url,
+      urlToImage: urlToImage ?? this.urlToImage,
+      publishedAt: publishedAt ?? this.publishedAt,
+      content: content ?? this.content,
+    );
+  }
 
-  factory Article.fromMap(Map<String, dynamic> json) => Article(
-        source: json["source"] == null ? null : Source.fromMap(json["source"]),
-        author: json["author"],
-        title: json["title"],
-        description: json["description"],
-        url: json["url"],
-        urlToImage: json["urlToImage"],
-        publishedAt: json["publishedAt"] == null
-            ? null
-            : DateTime.parse(json["publishedAt"]),
-        content: json["content"],
-      );
+  Map<String, dynamic> toJson() {
+    return {
+      'source': source,
+      'author': author,
+      'title': title,
+      'description': description,
+      'url': url,
+      'urlToImage': urlToImage,
+      'publishedAt': publishedAt,
+      'content': content,
+    };
+  }
 
-  Map<String, dynamic> toMap() => {
-        "source": source?.toMap(),
-        "author": author,
-        "title": title,
-        "description": description,
-        "url": url,
-        "urlToImage": urlToImage,
-        "publishedAt": publishedAt?.toIso8601String(),
-        "content": content,
-      };
+  factory Articles.fromJson(Map<String, dynamic> json) {
+    return Articles(
+      source: json['source'] == String
+          ? null
+          : Source.fromJson(json['source'] as Map<String, dynamic>),
+      author: json['author'] as String?,
+      title: json['title'] as String?,
+      description: json['description'] as String?,
+      url: json['url'] as String?,
+      urlToImage: json['urlToImage'] as String?,
+      publishedAt: json['publishedAt'] as String?,
+      content: json['content'] as String?,
+    );
+  }
 }
 
-class Source {
-  Id? id;
+class Source with EquatableMixin {
+  String? id;
   String? name;
 
   Source({
@@ -115,42 +138,30 @@ class Source {
     this.name,
   });
 
+  @override
+  List<Object?> get props => [id, name];
+
   Source copyWith({
-    Id? id,
+    String? id,
     String? name,
-  }) =>
-      Source(
-        id: id ?? this.id,
-        name: name ?? this.name,
-      );
+  }) {
+    return Source(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
 
-  factory Source.fromMap(Map<String, dynamic> json) => Source(
-        id: idValues.map[json["id"]]!,
-        name: json["name"],
-      );
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+    };
+  }
 
-  Map<String, dynamic> toMap() => {
-        "id": idValues.reverse[id],
-        "name": name,
-      };
-}
-
-enum Id { BBC_NEWS, BUSINESS_INSIDER, ESPN }
-
-final idValues = EnumValues({
-  "bbc-news": Id.BBC_NEWS,
-  "business-insider": Id.BUSINESS_INSIDER,
-  "espn": Id.ESPN
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
+  factory Source.fromJson(Map<String, dynamic> json) {
+    return Source(
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+    );
   }
 }
