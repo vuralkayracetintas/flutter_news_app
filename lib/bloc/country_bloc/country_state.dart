@@ -18,7 +18,7 @@ class CountryLoadingState extends CountryState {
 class CountryLoadedState extends CountryState {
   final CountryNewsModel countries;
 
-  CountryLoadedState(this.countries);
+  const CountryLoadedState(this.countries);
 
   @override
   List<Object?> get props => [countries];
@@ -27,7 +27,7 @@ class CountryLoadedState extends CountryState {
 class CountryErrorState extends CountryState {
   final String message;
 
-  CountryErrorState(this.message);
+  const CountryErrorState(this.message);
 
   @override
   List<Object> get props => [message];

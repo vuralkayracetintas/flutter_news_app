@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/core/category/news_category.dart';
+
 import 'package:news_app/core/country/country_view.dart';
+import 'package:news_app/core/home/home_view.dart';
 import 'package:news_app/product/repository/country_repository.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const CountryHomeView(),
+        home: HomeView(),
       ),
     );
     // return MaterialApp(
