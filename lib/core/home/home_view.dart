@@ -43,6 +43,7 @@ class _HomeViewState extends State<HomeView> {
                 },
                 child: Column(
                   children: [
+                    TextField(),
                     NewsCategoryList(),
                     Expanded(
                       child: CountryHomeView(
